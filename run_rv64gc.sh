@@ -25,7 +25,7 @@ echo "-------------------------------------------------------------------------"
 echo Running on Spike
 echo "-------------------------------------------------------------------------"
 
-echo "run.sh | timeout --foreground 60s spike  --log-commits --log  $OUT_DIR/$FILENAME.dump --isa=rv64g +signature=spike_signature.txt +signature-granularity=4 $OUT_DIR/$FILENAME.elf"
+echo "run.sh | timeout --foreground 60s spike  --log-commits --log  $OUT_DIR/$FILENAME.dump --isa=rv64gc +signature=spike_signature.txt +signature-granularity=4 $OUT_DIR/$FILENAME.elf"
 timeout --foreground 60s spike  --log-commits --log  $OUT_DIR/$FILENAME.dump --isa=rv64gc +signature=spike_signature.txt +signature-granularity=4 $OUT_DIR/$FILENAME.elf
 
 echo "-------------------------------------------------------------------------"

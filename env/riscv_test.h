@@ -200,7 +200,14 @@ handle_exception:                                                       \
   write_tohost:                                                         \
         sw TESTNUM, tohost, t5;                                         \
         sw zero, tohost + 4, t5;                                        \
-        j write_tohost;                                                 \
+    shakti_end:                                                           \
+        fence.i;                                                        \
+        li t6,  0x50000;                                                \
+        la t5, begin_signature;                                         \
+        sw t5, 0(t6);                                                   \
+        la t5, end_signature;                                           \
+        sw t5, 8(t6);                                                   \
+        sw t5,  12(t6);                                                 \
 reset_vector:                                                           \
         INIT_XREG;                                                      \
         RISCV_MULTICORE_DISABLE;                                        \
