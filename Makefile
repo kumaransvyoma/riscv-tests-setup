@@ -14,7 +14,7 @@ OUT_DIR   := $(TEST_HOME)/work/$(FILENAME)
 GCC       := riscv64-unknown-elf-gcc
 OBJDUMP   := riscv64-unknown-elf-objdump
 SPIKE     := spike
-TIMEOUT   := timeout --foreground 6s
+TIMEOUT   := timeout --foreground 3s
 
 # Compiler/linker options
 CFLAGS    := -march=rv64imafdczicsr_zifencei -mabi=lp64 -static -mcmodel=medany -fvisibility=hidden \
