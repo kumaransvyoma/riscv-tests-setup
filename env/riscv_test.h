@@ -202,7 +202,7 @@ handle_exception:                                                       \
         sw zero, tohost + 4, t5;                                        \
     shakti_end:                                                           \
         fence.i;                                                        \
-        li t6,  0x50000;                                                \
+        li t6,  0x20000;                                                \
         la t5, begin_signature;                                         \
         sw t5, 0(t6);                                                   \
         la t5, end_signature;                                           \

@@ -17,7 +17,7 @@ SPIKE     := spike
 TIMEOUT   := timeout --foreground 6s
 
 # Compiler/linker options
-CFLAGS    := -march=rv64imafdc -mabi=lp64 -static -mcmodel=medany -fvisibility=hidden \
+CFLAGS    := -march=rv64imafdczicsr_zifencei -mabi=lp64 -static -mcmodel=medany -fvisibility=hidden \
              -nostdlib -nostartfiles -DENTROPY=0x9629af2 -std=gnu99 -O2 \
              -I$(TEST_HOME)/env -T$(TEST_HOME)/env/link.ld
 
@@ -49,13 +49,13 @@ disasm: $(OUT_DIR)/$(FILENAME).elf
 		--section=.text --section=.text.startup --section=.text.init --section=.data \
 		$< > $(OUT_DIR)/$(FILENAME).disass
 	@echo "-------------------------------------------------------------------------"
-	
+
 spike: $(OUT_DIR)/$(FILENAME).elf
 	@echo "-------------------------------------------------------------------------"
 	@echo "Running on Spike"
 	@echo "-------------------------------------------------------------------------"
 	$(TIMEOUT) $(SPIKE) --log-commits --log $(OUT_DIR)/$(FILENAME).dump \
-		--isa=rv64gc +signature=spike_signature.txt +signature-granularity=4 $<
+		--isa=rv64gcZicsr_Zifencei +signature=spike_signature.txt +signature-granularity=4 $<
 	@echo "-------------------------------------------------------------------------"
 
 clean:
@@ -79,4 +79,7 @@ run_dut: $(OUT_DIR)/$(FILENAME).elf
 	cp -r "$(DESIGN_HOME)"/. $(OUT_DIR)/
 	elf2hex  8  4194304  $(OUT_DIR)/$(FILENAME).elf 2147483648 > $(OUT_DIR)/code.mem
 	cd $(OUT_DIR) && \
-	timeout --foreground 6s ./out +rtldump
+	timeout --foreground 30s ./out +rtldump
+	@echo "-------------------------------------------------------------------------"
+	@echo "TEST COMPLETED"
+	@echo "-------------------------------------------------------------------------"
